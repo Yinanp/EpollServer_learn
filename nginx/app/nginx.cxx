@@ -7,6 +7,7 @@
 #include <errno.h>
 #include <arpa/inet.h>
 #include <sys/time.h>          //gettimeofday
+#include <iostream>
 
 #include "ngx_macro.h"         //各种宏定义
 #include "ngx_func.h"          //各种函数声明
@@ -44,7 +45,7 @@ sig_atomic_t  ngx_reap;         //标记子进程状态变化[一般是子进程
 //程序主入口函数----------------------------------
 int main(int argc, char *const *argv)
 {     
-
+    std::cout<<"程序启动"<<std::endl;
     int exitcode = 0;           //退出代码，先给0表示正常退出
     int i;                      //临时用
     
@@ -73,6 +74,7 @@ int main(int argc, char *const *argv)
     ngx_reap = 0;                     //标记子进程没有发生变化
    
     CConfig *p_config = CConfig::GetInstance(); //单例类
+    //fixme:这里路径硬编码，应该用一个宏
     if(p_config->Load("nginx.conf") == false) //把配置文件内容载入到内存            
     {   
         ngx_log_init();    //初始化日志
@@ -87,6 +89,7 @@ int main(int argc, char *const *argv)
     CCRC32::GetInstance();
         
     //(3)一些必须事先准备好的资源，先初始化
+    //fixme 可以直接提前初始化
     ngx_log_init();             //日志初始化(创建/打开日志文件)，这个需要配置项，所以必须放配置文件载入的后边；     
         
     //(4)一些初始化函数，准备放这里        
@@ -130,6 +133,7 @@ int main(int argc, char *const *argv)
 lblexit:
     //(5)该释放的资源要释放掉
     ngx_log_stderr(0,"程序退出，再见了!");
+    //std::cout<<"程序退出"<<std::endl;
     freeresource();  //一系列的main返回前的释放动作函数
     //printf("程序退出，再见!\n");    
     return exitcode;

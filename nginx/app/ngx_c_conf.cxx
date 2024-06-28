@@ -31,6 +31,7 @@ CConfig::~CConfig()
 //装载配置文件
 bool CConfig::Load(const char *pconfName) 
 {   
+    //fixme:这里可以用std::fstream,包括后面的字符串处理都可以重新实现一下
     FILE *fp;
     fp = fopen(pconfName,"r");
     if(fp == NULL)

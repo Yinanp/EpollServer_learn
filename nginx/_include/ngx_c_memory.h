@@ -6,6 +6,7 @@
 class CMemory 
 {
 private:
+	//fixme：default
 	CMemory() {}  
 
 public:

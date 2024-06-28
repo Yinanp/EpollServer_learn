@@ -49,6 +49,7 @@ public:
 	int  GetIntDefault(const char *p_itemname,const int def);
 
 public:
+	//TODO：这里可以用map类型，更加方便
 	std::vector<LPCConfItem> m_ConfigItemList; 
 
 };
